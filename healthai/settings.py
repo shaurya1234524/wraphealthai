@@ -46,8 +46,7 @@ load_dotenv()
 
 # Fetch API keys
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+
 
 # Load environment variables from .env
 load_dotenv()
