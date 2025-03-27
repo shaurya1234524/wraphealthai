@@ -232,9 +232,9 @@ def logout_view(request):
 
 load_dotenv()
 
-API_KEY = "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"
+from django.conf import settings
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+HEADERS = {"Authorization": f"Bearer {settings.OPENROUTER_API_KEY}", "Content-Type": "application/json"}
 
 def get_medical_diagnosis(patient_name, age, gender, symptoms):
     """Generates AI-based diagnosis, treatment, and medicine prescription."""
