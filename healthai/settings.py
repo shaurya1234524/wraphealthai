@@ -38,6 +38,25 @@ AWS_SECRET_ACCESS_KEY = "FNkBF6xMwlV7Qk268hZ1j09QYTHYmot1a1gDy5e6"
 AWS_STORAGE_BUCKET_NAME = 'shaurya-bucket1222333223123'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+
+
+# Load environment variables from .env
+load_dotenv()
+
+# Fetch API keys
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
+# Load environment variables from .env
+load_dotenv()
+
+# Fetch API keys
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG", "False") == "True"
+
 AWS_S3_FILE_OVERWRITE = True
 
 # Application definition
