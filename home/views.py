@@ -35,10 +35,7 @@ from google_auth_oauthlib.flow import Flow
 from google.auth.transport.requests import Request
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-import environ
 
-env = environ.Env()
-environ.Env.read_env()
 from django.conf import settings
 
 from django.contrib.auth.models import User
@@ -234,7 +231,7 @@ def logout_view(request):
     return redirect('/')  # Redirect to home after logout
 
 load_dotenv()
-API_KEY = env("API_KEY")
+
 API_KEY = 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
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 HEADERS = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
