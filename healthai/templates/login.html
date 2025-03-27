@@ -102,6 +102,14 @@
 <body>
     <div class="container">
         <h2>Login</h2>
+        {% if messages %}
+    <div style="color: red; font-weight: bold;">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <label for="username">Username</label>
