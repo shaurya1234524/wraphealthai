@@ -189,9 +189,9 @@ def login_view(request):
                 messages.error(request, "Please verify your email first!")
                 return redirect('verify_email')
         else:
-            messages.error(request, "Invalid username or password!")
+            messages.error(request, "Invalid username or password!")  # Error message
 
-    return render(request, 'login.html')
+    return render(request, 'login.html')  # Ensure the template is reloaded
 
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
