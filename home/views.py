@@ -476,7 +476,7 @@ def analyze_lab_report(report_path):
     {report_text}
     """
 
-    headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
+    headers = {"Authorization": f"Bearer {settings.OPENROUTER_API_KEY}", "Content-Type": "application/json"}
     payload = {
         "model": "google/gemma-3-1b-it:free",
         "messages": [{"role": "system", "content": prompt}]
