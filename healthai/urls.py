@@ -33,6 +33,8 @@ urlpatterns = [
     path('verify-email/', verify_email_view, name='verify_email'),
     path('login/', login_view, name='login'),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
+    path("sitemap.xml/", views.sitemap, name="sitemap"),
+    path("robots.txt/", views.robots, name="robots"),
 #    path("admin/",include('admin.site.urls')),
        path('accounts/', include('home.urls')),
     path('',views.home,name="home"),
