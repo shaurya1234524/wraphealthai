@@ -45,6 +45,12 @@ def home(request):
     return render(request,"home.html")
 def aboutdisplay(request):
     return render(request,"about.html")
+
+from datetime import date
+
+def privacy_policy(request):
+    return render(request, "privacy_policy.html", {"today": date.today()})
+
 def contact_us(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
