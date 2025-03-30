@@ -50,6 +50,10 @@ from datetime import date
 
 def privacy_policy(request):
     return render(request, "privacy_policy.html", {"today": date.today()})
+def sitemap(request):
+    return render(request, "sitemap.xml")
+def robots(request):
+    return render(request, "robots.txt")
 
 def contact_us(request):
     if request.method == "POST":
