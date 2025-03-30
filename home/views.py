@@ -310,7 +310,7 @@ def get_medical_diagnosis(patient_name, age, gender, symptoms):
             "Additional Notes": "N/A",
             "Follow-up": "N/A",
         }
-@login_required
+
 def diagnose(request):
     """Handles user input and generates a detailed PDF medical report."""
     
@@ -442,7 +442,7 @@ def analyze_medical_image(image_path):
     except requests.exceptions.RequestException as e:
         print("Error in API call:", e)
         return "⚠️ AI Diagnosis not available."
-@login_required
+
 def image_diagnosis(request):
     diagnosis_result = None
     image_url = None
@@ -514,7 +514,7 @@ def analyze_lab_report(report_path):
         return data["choices"][0]["message"]["content"]
     except requests.exceptions.RequestException as e:
         return f"⚠️ Error processing report: {e}"
-@login_required
+
 def lab_report_analysis(request):
     report_result = None
     if request.method == "POST":
