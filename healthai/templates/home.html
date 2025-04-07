@@ -128,7 +128,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand fw-bold" href="/">WrapDoctorsAI</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -182,7 +183,7 @@
             <div class="col-md-4">
                 <div class="feature-box">
                     <img src="https://shaurya-bucket-5763394.s3.eu-north-1.amazonaws.com/admin/img/7918380.png" alt="Report" class="feature-img">
-                    <h4>AI Medical Reports</h4>
+                    <h3>AI Medical Reports</h3>
                     <p>Generate & download AI-powered health reports based on symptoms.</p>
                     <a href="diagnose/" class="btn-start">🚀Generate</a>
                 </div>
@@ -190,7 +191,7 @@
             <div class="col-md-4">
                 <div class="feature-box">
                     <img src="https://shaurya-bucket-5763394.s3.eu-north-1.amazonaws.com/admin/img/radio-ryc22.jpg" alt="Scan" class="feature-img">
-                    <h4>CT Scan & X-Ray Analysis</h4>
+                    <h3>CT Scan & X-Ray Analysis</h3>
                     <p>Upload medical images for AI diagnosis & treatment suggestions.</p>
                     <a href="image-diagnosis/" class="btn-start">🚀Scanning</a>
                 </div>
@@ -198,7 +199,7 @@
             <div class="col-md-4">
                 <div class="feature-box">
                     <img src="https://shaurya-bucket-5763394.s3.eu-north-1.amazonaws.com/admin/img/images.png" alt="Lab" class="feature-img">
-                    <h4>Lab Report Interpretation</h4>
+                    <h3>Lab Report Interpretation</h3>
                     <p>AI-powered insights from blood tests, urine tests, and more.</p>
                     <a href="lab-report-analysis/" class="btn-start">🚀analyze</a>
                 </div>
@@ -220,7 +221,8 @@
                     <li><a href="{% url 'home' %}#features" class="text-white text-decoration-none">Features</a></li>
                     <li><a href="/about" class="text-white text-decoration-none">About Us</a></li>
                     <li><a href="{% url 'home' %}contact" class="text-white text-decoration-none">Contact</a></li>
-                    <p><a style="color:white;text-decoration:none;"href="{% url 'privacy_policy' %}">Privacy Policy</a></p>
+<li><a style="color:white;text-decoration:none;" href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+
                 </ul>
             </div>
 
@@ -239,9 +241,10 @@
             <!-- Social Media -->
             <div class="col-md-4">
                 <h5 class="fw-bold">Follow Us</h5>
-                <a href="https://www.facebook.com/profile.php?id=61574637514672" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                <a href="https://x.com/wrapdoctor59410" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
-                <a href="https://www.linkedin.com/in/wrapdoctor-ai-3398a9358/" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+               <a href="https://x.com/wrapdoctor59410" class="text-white me-3" aria-label="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+<a href="https://www.facebook.com/profile.php?id=61574637514672" class="text-white me-3" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+<a href="https://www.linkedin.com/in/wrapdoctor-ai-3398a9358/" class="text-white" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+
             </div>
         </div>
 
