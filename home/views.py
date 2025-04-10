@@ -312,8 +312,6 @@ def get_medical_diagnosis(patient_name, age, gender, symptoms):
         }
 
 def diagnose(request):
-    """Handles user input and generates a detailed PDF medical report."""
-    
     if request.method == "POST":
         patient_name = request.POST.get("patient_name", "Unknown Patient").strip()
         age = request.POST.get("age", "N/A").strip()
@@ -329,77 +327,105 @@ def diagnose(request):
             return render(request, "report_form.html", {"error": "Please enter symptoms."})
 
         diagnosis_data = get_medical_diagnosis(patient_name, age, gender, symptoms)
-        
-        pdf_buffer = generate_pdf_report(
-            patient_name, age, gender, symptoms, contact, address,
-            diagnosis_data, doctor_name, specialization, hospital
-        )
 
-        return FileResponse(pdf_buffer, as_attachment=True, filename=f"Medical_Report_{patient_name}.pdf")
+        context = {
+            "patient_name": patient_name,
+            "age": age,
+            "gender": gender,
+            "symptoms": symptoms,
+            "contact": contact,
+            "address": address,
+            "doctor_name": doctor_name,
+            "hospital": hospital,
+            "specialization": specialization,
+            "diagnosis_data": diagnosis_data
+        }
+
+        return render(request, "preview_report.html", context)
 
     return render(request, "report_form.html")
 
+
+
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
 
 def generate_pdf_report(patient_name, age, gender, symptoms, contact, address, diagnosis_data, doctor_name, specialization, hospital):
-    """Creates a detailed, formatted medical report PDF with an AI disclaimer."""
+    """Creates a polished and structured AI-generated medical report in PDF format."""
 
     buffer = BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=40, leftMargin=40, topMargin=40, bottomMargin=40)
     styles = getSampleStyleSheet()
 
-    elements = [
-        Paragraph("<b>Medical Diagnosis Report</b>", styles["Title"]),
-        Spacer(1, 12),
-        Paragraph(f"<b>Patient Name:</b> {patient_name}", styles["Normal"]),
-        Paragraph(f"<b>Age:</b> {age}", styles["Normal"]),
-        Paragraph(f"<b>Gender:</b> {gender}", styles["Normal"]),
-        Paragraph(f"<b>Symptoms:</b> {symptoms}", styles["Normal"]),
-        Paragraph(f"<b>Contact:</b> {contact}", styles["Normal"]),
-        Paragraph(f"<b>Address:</b> {address}", styles["Normal"]),
-        Spacer(1, 12),
+    # Custom styles
+    title_style = ParagraphStyle(name="TitleStyle", parent=styles["Title"], alignment=TA_CENTER, fontSize=20, spaceAfter=20)
+    section_heading = ParagraphStyle(name="SectionHeading", parent=styles["Heading2"], spaceBefore=12, spaceAfter=6)
+    body_text = styles["BodyText"]
 
-        # Diagnosis Section
-        Paragraph("<b>Diagnosis:</b>", styles["Heading2"]),
-        Paragraph(diagnosis_data.get("Diagnosis", "N/A"), styles["BodyText"]),
-        Spacer(1, 12),
+    elements = []
 
-        # Treatment Plan
-        Paragraph("<b>Treatment Plan:</b>", styles["Heading2"]),
-        Paragraph(diagnosis_data.get("Treatment Plan", "N/A"), styles["BodyText"]),
-        Spacer(1, 12),
+    # Title
+    elements.append(Paragraph("🩺 Medical Diagnosis Report", title_style))
+    elements.append(HRFlowable(width="100%", thickness=1, color="#555555"))
+    elements.append(Spacer(1, 12))
 
-        # Recommended Medicines
-        Paragraph("<b>Recommended Medicines:</b>", styles["Heading2"]),
-        Paragraph(diagnosis_data.get("Medicines", "N/A"), styles["BodyText"]),
-        Spacer(1, 12),
+    # Patient Details
+    patient_info = f"""
+    <b>Patient Name:</b> {patient_name}<br/>
+    <b>Age:</b> {age}<br/>
+    <b>Gender:</b> {gender}<br/>
+    <b>Contact:</b> {contact}<br/>
+    <b>Address:</b> {address}<br/>
+    <b>Symptoms:</b> {symptoms}
+    """
+    elements.append(Paragraph(patient_info.strip(), body_text))
+    elements.append(Spacer(1, 12))
 
-        # Additional Notes
-        Paragraph("<b>Additional Notes:</b>", styles["Heading2"]),
-        Paragraph(diagnosis_data.get("Additional Notes", "N/A"), styles["BodyText"]),
-        Spacer(1, 12),
+    # Diagnosis Section
+    elements.append(Paragraph("Diagnosis", section_heading))
+    elements.append(Paragraph(diagnosis_data.get("Diagnosis", "N/A"), body_text))
+    elements.append(Spacer(1, 10))
 
-        # Follow-up
-        Paragraph("<b>Follow-up:</b>", styles["Heading2"]),
-        Paragraph(diagnosis_data.get("Follow-up", "N/A"), styles["BodyText"]),
-        Spacer(1, 12),
+    # Treatment Plan
+    elements.append(Paragraph("Treatment Plan", section_heading))
+    elements.append(Paragraph(diagnosis_data.get("Treatment Plan", "N/A"), body_text))
+    elements.append(Spacer(1, 10))
 
-        # Doctor Info
-        Paragraph(f"<b>Doctor:</b> {doctor_name} ({specialization})", styles["Normal"]),
-        Paragraph(f"<b>Hospital:</b> {hospital}", styles["Normal"]),
-        Spacer(1, 24),  # Extra space before disclaimer
+    # Recommended Medicines
+    elements.append(Paragraph("Recommended Medicines", section_heading))
+    elements.append(Paragraph(diagnosis_data.get("Medicines", "N/A"), body_text))
+    elements.append(Spacer(1, 10))
 
-        # Disclaimer Section
-        Paragraph("<b> Disclaimer:</b>", styles["Heading2"]),
-        Paragraph(
-            "This medical report is generated by an AI model and may contain inaccuracies. "
-            "It is not a substitute for professional medical advice. Please consult a licensed doctor before making any health-related decisions.",
-            styles["BodyText"]
-        ),
-    ]
+    # Additional Notes
+    elements.append(Paragraph("Additional Notes", section_heading))
+    elements.append(Paragraph(diagnosis_data.get("Additional Notes", "N/A"), body_text))
+    elements.append(Spacer(1, 10))
+
+    # Follow-up
+    elements.append(Paragraph("Follow-up", section_heading))
+    elements.append(Paragraph(diagnosis_data.get("Follow-up", "N/A"), body_text))
+    elements.append(Spacer(1, 16))
+
+    # Doctor Info
+    doctor_info = f"""
+    <b>Doctor:</b> {doctor_name} ({specialization})<br/>
+    <b>Hospital:</b> {hospital}
+    """
+    elements.append(Paragraph(doctor_info.strip(), body_text))
+    elements.append(Spacer(1, 20))
+
+    # Disclaimer
+    elements.append(HRFlowable(width="100%", thickness=1, color="#888888"))
+    elements.append(Spacer(1, 10))
+    elements.append(Paragraph("⚠️ AI Disclaimer", section_heading))
+    elements.append(Paragraph(
+        "This medical report was generated using AI and is intended for informational purposes only. "
+        "It should not replace consultation with a licensed healthcare professional.",
+        body_text
+    ))
 
     doc.build(elements)
     buffer.seek(0)
