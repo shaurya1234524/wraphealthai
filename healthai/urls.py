@@ -32,6 +32,7 @@ urlpatterns = [
        path('signup/', signup_view, name='signup'),
     path('verify-email/', verify_email_view, name='verify_email'),
     path('login/', login_view, name='login'),
+    path('ads.txt/', views.ads, name='ads'),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
     path("sitemap.xml/", views.sitemap, name="sitemap"),
     path("robots.txt/", views.robots, name="robots"),
