@@ -45,7 +45,8 @@ def home(request):
     return render(request,"home.html")
 def aboutdisplay(request):
     return render(request,"about.html")
-
+def ads(request):
+    return render(request,'ads.txt')
 from datetime import date
 
 def privacy_policy(request):
